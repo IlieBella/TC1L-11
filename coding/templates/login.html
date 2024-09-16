@@ -4,18 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login - Private Jet Ticketing Service</title>
-    <link rel="stylesheet" href="{C:\Users\PC\Downloads\mini IT project'\HTML\style}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <header>
         <h1>Login</h1>
         <nav>
             <a href="{{ url_for('index') }}">Home</a>
-            {% if 'username' in session %}
-                <a href="{{ url_for('logout') }}">Logout</a>
-            {% else %}
-                <a href="{{ url_for('login') }}">Login</a>
-            {% endif %}
+            <a href="{{ url_for('signup') }}">Signup</a>
         </nav>
     </header>
     <main>
@@ -26,6 +22,7 @@
             <input type="password" id="password" name="password" required>
             <button type="submit">Login</button>
         </form>
+        <p><a href="{{ url_for('signup') }}">Create an account</a></p>
     </main>
 </body>
 </html>
