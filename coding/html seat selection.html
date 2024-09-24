@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Jet Ticketing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .window {
+            background-color: lightblue;
+        }
+        .aisle {
+            background-color: lightgreen;
+        }
+        .booked {
+            background-color: gray;
+            pointer-events: none;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 20px;
+        }
+        .price {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Private Jet Ticketing System</h1>
+    
+    <h3>Select a Seat:</h3>
+    <table id="plane-layout">
+        <!-- Plane Layout will be generated dynamically -->
+    </table>
+    
+    <div class="price">
+        <span id="seat-info">No seat selected</span>
+    </div>
+    
+    <button id="confirm-button" style="display:none;">Confirm Booking</button>
+
+    <script>
+        // Define the plane layout (W: window, A: aisle, X: booked)
+        const planeLayout = [
+            ['W', 'A', 'A', 'W'],
+            ['W', 'A', 'A', 'W'],
+            ['W', 'A', 'A', 'W'],
+            ['W', 'A', 'A', 'W']
+        ];
+
+        // Prices for window and aisle seats in RM
+        const seatPrices = {
+            'W': 500,
+            'A': 400
+        };
+
+        let selectedSeat = null;
+
+        // Function to create the plane layout dynamically
+        function createPlaneLayout() {
+            const table = document.getElementById('plane-layout');
+            table.innerHTML = ''; // Clear table content
+
+            planeLayout.forEach((row, rowIndex) => {
+                const tr = document.createElement('tr');
+                row.forEach((seatType, colIndex) => {
+                    const td = document.createElement('td');
+                    td.textContent = seatType;
+
+                    // Add class based on seat type
+                    if (seatType === 'W') td.classList.add('window');
+                    if (seatType === 'A') td.classList.add('aisle');
+                    if (seatType === 'X') td.classList.add('booked');
+
+                    // Make seat clickable if not booked
+                    if (seatType !== 'X') {
+                        td.addEventListener('click', () => selectSeat(rowIndex, colIndex));
+                    }
+
+                    tr.appendChild(td);
+                });
+                table.appendChild(tr);
+            });
+        }
+
+        // Function to handle seat selection
+        function selectSeat(row, col) {
+            const seatType = planeLayout[row][col];
+            const price = seatPrices[seatType];
+            selectedSeat = { row, col, seatType, price };
+
+            document.getElementById('seat-info').textContent = `Selected seat: ${seatType} - RM ${price}`;
+            document.getElementById('confirm-button').style.display = 'block';
+        }
+
+        // Handle the booking confirmation
+        document.getElementById('confirm-button').addEventListener('click', function() {
+            if (selectedSeat) {
+                // Mark seat as booked in the layout
+                planeLayout[selectedSeat.row][selectedSeat.col] = 'X';
+                selectedSeat = null;
+
+                alert('Seat booked successfully!');
+                createPlaneLayout(); // Recreate the layout to reflect changes
+                document.getElementById('seat-info').textContent = 'No seat selected';
+                document.getElementById('confirm-button').style.display = 'none';
+            }
+        });
+
+        // Initialize plane layout on page load
+        createPlaneLayout();
+    </script>
+
+</body>
+</html>
