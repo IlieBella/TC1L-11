@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Checkout - Luxurair Private Jet Ticketing Service</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="topnav">
+        <a href="/">Home</a>
+        <a href="/userprofile">User</a>
+        <a href="/">Logout</a> 
+    </div>
+    <form method="post">
+        <div class="grid-container">
+            <div class="left" style="background-color:hwb(171 33% 46%);">
+
+            </div>
+            <div class="middle" style="background-color:#bbb;">
+                <label for="firstname">First Name:</label><br>
+                <input type="text" id="firstname" name="firstname" placeholder="Enter first name" required><br><br>
+                <label for="lastname">Last Name:</label><br>
+                <input type="text" id="lastname" name="lastname" placeholder="Enter last name" required><br><br>    
+                <label for="country">Country:</label><br>              
+                    <select id="country" name="country" class="form-control" required>
+                        <option value="Malaysia">Malaysia</option>
+                    </select><br><br>
+                <label for="city">City:</label><br>
+                <input type="text" id="city" name="city" placeholder="Enter city" required><br><br>
+                <label for="zipcode">Zip Code:</label><br>
+                <input type="text" id="zipcode" name="zipcode" placeholder="Enter zip code" required><br><br>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" placeholder="Enter email" required><br><br>
+                <label for="phonenumber">Phone Number:</label><br>
+                <input type="text" id="phonenumber" name="phonenumber" placeholder="Enter phone number" required><br><br>
+                <input type="submit" value="Confirm">
+                <input type="reset" value="Reset">
+            </div>
+            <div class="right" style="background-color:hwb(171 33% 46%);">
+            
+            </div>
+        </div>
+    </form>
+    <div class="footer">
+        <p>THANK YOU FOR USING LUXURAIR !</p>
+    </div>
+</body>
+</html>
