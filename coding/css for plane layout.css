@@ -1,64 +1,43 @@
 body {
     font-family: Arial, sans-serif;
-}
-
-h1, h2 {
     text-align: center;
 }
 
-.plane-layout {
-    display: flex;
-    justify-content: center;
-    margin: 20px;
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
 }
 
-.seat-row {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-.seat {
-    width: 40px;
-    height: 40px;
-    margin: 5px;
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    width: 50px;
+    height: 50px;
     text-align: center;
-    line-height: 40px;
-    font-weight: bold;
-    border-radius: 5px;
-    border: 2px solid #333;
+    vertical-align: middle;
 }
 
-.available {
-    background-color: #4CAF50;
-    cursor: pointer;
+.window {
+    background-color: lightblue;
+}
+
+.aisle {
+    background-color: lightgreen;
 }
 
 .booked {
-    background-color: #f44336;
-    color: white;
-}
-
-input[type="checkbox"] {
-    display: none;
-}
-
-input[type="checkbox"]:checked + .available {
-    background-color: #FFD700;
+    background-color: gray;
+    pointer-events: none;
 }
 
 button {
-    display: block;
-    margin: 20px auto;
     padding: 10px 20px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    margin-top: 20px;
 }
 
-button:hover {
-    background-color: #0056b3;
+.price {
+    font-size: 18px;
+    margin-top: 10px;
 }
+
 
