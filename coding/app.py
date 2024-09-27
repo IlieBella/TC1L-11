@@ -92,30 +92,30 @@ def home():
     ]
     return render_template('home.html', flights=flights)
 
-# @app.route('/user_profile', methods=['GET', 'POST'])
-# def profile():
-#     form = UpdateProfileForm()
-#     if form.validate_on_submit():
-#         # Assuming current_user is defined and represents the logged-in user
-#         conn = get_db_connection()
-#         conn.execute('UPDATE users SET username = ?, email = ? WHERE username = ?',
-#                      (form.username.data, form.email.data, session['username']))
-#         conn.commit()
-#         conn.close()
-#         flash('Your account has been updated!', 'success')
-#         return redirect(url_for('profile'))  # Correct redirect to profile view
+@app.route('/user_profile', methods=['GET', 'POST'])
+def profile():
+    form = UpdateProfileForm()
+    if form.validate_on_submit():
+        # Assuming current_user is defined and represents the logged-in user
+        conn = get_db_connection()
+        conn.execute('UPDATE users SET username = ?, email = ? WHERE username = ?',
+                     (form.username.data, form.email.data, session['username']))
+        conn.commit()
+        conn.close()
+        flash('Your account has been updated!', 'success')
+        return redirect(url_for('profile'))  # Correct redirect to profile view
 
-#     elif request.method == 'GET':
-#         # Retrieve current user's data from the database
-#         conn = get_db_connection()
-#         user = conn.execute('SELECT * FROM users WHERE username = ?', 
-#                             (session['username'],)).fetchone()
-#         conn.close()
-#         form.username.data = user['username']
-#         form.email.data = user['email']
+    elif request.method == 'GET':
+        # Retrieve current user's data from the database
+        conn = get_db_connection()
+        user = conn.execute('SELECT * FROM users WHERE username = ?', 
+                            (session['username'],)).fetchone()
+        conn.close()
+        form.username.data = user['username']
+        form.email.data = user['email']
 
-#     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-#     return render_template('user_profile.html', title='Profile', image_file=image_file, form=form)
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    return render_template('user_profile.html', title='Profile', image_file=image_file, form=form)
 
 @app.route('/booking')
 def booking():
