@@ -1,48 +1,58 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 class PrivateJetTicketingSystem:
     def __init__(self):
-        # Define a simple plane layout with 'W' as window seats, 'A' as aisle seats, and 'X' as booked seats
         self.plane_layout = [
             ['W', 'A', 'A', 'W'],
             ['W', 'A', 'A', 'W'],
             ['W', 'A', 'A', 'W'],
             ['W', 'A', 'A', 'W'],
         ]
-        # Set prices for window and aisle seats in RM
         self.seat_prices = {
             'W': 500,  # Window seat price in RM
             'A': 400   # Aisle seat price in RM
         }
-    
+
     def display_plane_layout(self):
         print("Current Plane Layout (W: Window, A: Aisle, X: Booked):")
         for row in self.plane_layout:
             print(" ".join(row))
         print()  # For spacing
 
-    def get_seat_price(self, seat_type):
-        return self.seat_prices.get(seat_type, 0)
-
     def select_seat(self, row, col):
         if self.plane_layout[row][col] == 'X':
-            print("Seat is already booked. Please choose another seat.")
-            return False
+            print("Seat is already booked. Would you like to unselect this seat? (yes/no): ", end='')
+            confirm = input().strip().lower()
+            if confirm == 'yes':
+                self.unselect_seat(row, col)
+                return False  # Indicates unselection, not booking
+            else:
+                return False  # Not booking
+
         else:
             seat_type = self.plane_layout[row][col]
-            price = self.get_seat_price(seat_type)
+            price = self.seat_prices[seat_type]
             print(f"Seat selected: {seat_type} seat, Price: RM {price}")
-            confirm = input("Do you want to book this seat? (yes/no): ").lower()
+            print("Do you want to book this seat? (yes/no): ", end='')
+            confirm = input().strip().lower()
             if confirm == 'yes':
                 self.plane_layout[row][col] = 'X'  # Mark seat as booked
                 print("Seat booked successfully!")
-                return True
+                return True  # Indicates successful booking
             else:
                 print("Seat booking canceled.")
                 return False
+
+    def unselect_seat(self, row, col):
+        if self.plane_layout[row][col] == 'X':
+            seat_type = 'W' if (col == 0 or col == 3) else 'A'  # Determine original seat type
+            self.plane_layout[row][col] = seat_type  # Unmark the seat as booked
+            print("Seat unbooked successfully!")
+        else:
+            print("This seat is not booked.")
 
     def start_booking(self):
         while True:
@@ -58,14 +68,7 @@ class PrivateJetTicketingSystem:
         
         print("Thank you for using LUXURAIR!")
 
-
-# Main Program Execution
+# Main Program Executionpyt
 if __name__ == "__main__":
     system = PrivateJetTicketingSystem()
     system.start_booking()
-
-
-
-
-#seat icon
-#https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pikpng.com%2Fpngvi%2FwowRiJ_flight-seat-filled-icon-airplane-seat-icon-clipart%2F&psig=AOvVaw2nAp566lyO-3AkMd_bZgmO&ust=1726202630528000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJia-IfMvIgDFQAAAAAdAAAAABAE
