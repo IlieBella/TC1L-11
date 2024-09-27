@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Jet Ticketing</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='seatselection.css') }}">
+</head>
+<body>
+    <nav class="navbar"></nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('booking') }}">Seat Selection</a></li>
+        </ul>
+    </nav>
+    <h1>Private Jet Ticketing System</h1>
+    <h3>Select a Seat:</h3>
+    <form action="{{ url_for('confirm_booking') }}" method="POST">
+        <table id="plane-layout">
+            {% for row in range(4) %}
+            <tr>
+                {% for col in range(4) %}
+                <td>
+                    {% set seat_type = plane_layout[row][col] %}
+                    {% if seat_type == 'X' %}
+                    <div class="booked">X</div>
+                    {% else %}
+                    <button type="submit" name="seat" value="{{ row }},{{ col }}" 
+                        class="{% if seat_type == 'W' %}window{% else %}aisle{% endif %}">
+                        {{ seat_type }}
+                    </button>
+                    {% endif %}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+    <div class="price">
+        {% if selected_seat %}
+        <span id="seat-info">Selected seat: {{ selected_seat }} - RM {{ seat_price }}</span>
+        {% else %}
+        <span id="seat-info">No seat selected</span>
+        {% endif %}
+    </div>
+</body>
+</html>
