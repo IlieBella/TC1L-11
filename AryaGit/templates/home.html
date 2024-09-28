@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Private Jet Ticketing - Homepage</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Home - Private Jet Ticketing Service</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
     <nav class="navbar"></nav>
     <ul>
         <li><a href="{{ url_for('home') }}">Home</a></li>
         <li><a href="{{ url_for('booking') }}">Seat Selection</a></li>
+        <li><a href="{{ url_for('profile') }}">User Profile</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
     </ul>
     </nav>
     <h1>Welcome to Private Jet Ticketing</h1>

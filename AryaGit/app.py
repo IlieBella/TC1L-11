@@ -10,188 +10,16 @@ app.secret_key = 'yellow'
 
 init_db()
 
-flights_data = {
-    'PJ101': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W']
-        ],
-        'seat_prices': {'W': 500, 'A': 400}
-    },
-    'PJ102': {
-        'plane_layout': [
-            ['W', 'A', 'W', 'W'],
-            ['W', 'A', 'W', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W']
-        ],
-        'seat_prices': {'W': 600, 'A': 450}
-    },
-    'PJ103': {
-        'plane_layout': [
-            ['W', 'W', 'A', 'A'],
-            ['W', 'W', 'A', 'A'],
-            ['A', 'A', 'W', 'W'],
-            ['A', 'A', 'W', 'W']
-        ],
-        'seat_prices': {'W': 700, 'A': 500}
-    },
-    'PJ104': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'W', 'A'],
-            ['A', 'W', 'W', 'A']
-        ],
-        'seat_prices': {'W': 550, 'A': 450}
-    },
-    'PJ105': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W']
-        ],
-        'seat_prices': {'W': 650, 'A': 500}
-    },
-    'PJ106': {
-        'plane_layout': [
-            ['W', 'A', 'W', 'A'],
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'A', 'W']
-        ],
-        'seat_prices': {'W': 800, 'A': 600}
-    },
-    'PJ107': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['A', 'W', 'W', 'A'],
-            ['A', 'A', 'W', 'W']
-        ],
-        'seat_prices': {'W': 1000, 'A': 700}
-    },
-    'PJ108': {
-        'plane_layout': [
-            ['W', 'W', 'A', 'A'],
-            ['A', 'A', 'W', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['W', 'W', 'A', 'A']
-        ],
-        'seat_prices': {'W': 750, 'A': 550}
-    },
-    'PJ109': {
-        'plane_layout': [
-            ['W', 'A', 'W', 'A'],
-            ['W', 'A', 'W', 'A'],
-            ['A', 'W', 'A', 'W'],
-            ['A', 'A', 'W', 'W']
-        ],
-        'seat_prices': {'W': 900, 'A': 600}
-    },
-    'PJ110': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'A', 'W'],
-            ['A', 'A', 'W', 'W']
-        ],
-        'seat_prices': {'W': 950, 'A': 700}
-     },
+plane_layout = [
+    ['W', 'A', 'A', 'W'],
+    ['W', 'A', 'A', 'W'],
+    ['W', 'A', 'A', 'W'],
+    ['W', 'A', 'A', 'W']
+]
 
-    'PJ111': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W']
-        ],
-        'seat_prices': {'W': 550, 'A': 400}
-    },
-    'PJ112': {
-        'plane_layout': [
-            ['W', 'A', 'W', 'A'],
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'A', 'W']
-        ],
-        'seat_prices': {'W': 600, 'A': 450}
-    },
-    'PJ113': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['A', 'W', 'A', 'A'],
-            ['W', 'A', 'W', 'A']
-        ],
-        'seat_prices': {'W': 750, 'A': 500}
-    },
-    'PJ114': {
-        'plane_layout': [
-            ['W', 'W', 'A', 'A'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'A', 'A'],
-            ['A', 'W', 'W', 'A']
-        ],
-        'seat_prices': {'W': 600, 'A': 450}
-    },
-    'PJ115': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'W', 'A']
-        ],
-        'seat_prices': {'W': 500, 'A': 400}
-    },
-    'PJ116': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['A', 'W', 'A', 'A'],
-            ['W', 'A', 'W', 'A']
-        ],
-        'seat_prices': {'W': 550, 'A': 450}
-    },
-    'PJ117': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['A', 'W', 'A', 'W'],
-            ['W', 'A', 'A', 'W']
-        ],
-        'seat_prices': {'W': 650, 'A': 500}
-    },
-    'PJ118': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'W', 'A'],
-            ['A', 'W', 'A', 'A'],
-            ['A', 'W', 'W', 'A']
-        ],
-        'seat_prices': {'W': 700, 'A': 550}
-    },
-    'PJ119': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'W', 'A'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'W', 'A']
-        ],
-        'seat_prices': {'W': 750, 'A': 600}
-    },
-    'PJ120': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'A', 'A']
-        ],
-        'seat_prices': {'W': 800, 'A': 650}
-    }
+seat_prices = {
+    'W': 500,
+    'A': 400
 }
 
 def get_db_connection():
@@ -271,7 +99,7 @@ def profile():
         # Assuming current_user is defined and represents the logged-in user
         conn = get_db_connection()
         conn.execute('UPDATE users SET username = ?, email = ? WHERE username = ?',
-                     (form.username.data, form.email.data, session['username']))
+                     (form.username.data, form.name.data, form.email.data, form.phonenumber.data, session['username']))
         conn.commit()
         conn.close()
         flash('Your account has been updated!', 'success')
@@ -284,34 +112,31 @@ def profile():
                             (session['username'],)).fetchone()
         conn.close()
         form.username.data = user['username']
+        form.name.data = user['name']
         form.email.data = user['email']
+        form.phonenumber.data = user['phonenumber']
 
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('user_profile.html', title='Profile', image_file=image_file, form=form)
+    return render_template('userprofile.html', form=form)
 
 @app.route('/booking')
 def booking():
-    return render_template('seat_selection.html', flights_data=flights_data, selected_seat=None)
+    return render_template('seat_selection.html', plane_layout=plane_layout, selected_seat=None)
 
 @app.route('/confirm_booking', methods=['POST'])
 def confirm_booking():
-    flight_number = request.form.get('flight_number')  # Make sure this field is included in your seat selection form
+
     seat_data = request.form.get('seat')
-
-    if flight_number and seat_data:
+    if seat_data:
         row, col = map(int, seat_data.split(','))
-        seat_type = flights_data[flight_number]['plane_layout'][row][col]
-        seat_price = flights_data[flight_number]['seat_prices'].get(seat_type, 0)
-
-        # Mark the seat as booked (using 'X' for example)
-        flights_data[flight_number]['plane_layout'][row][col] = 'X'
+        seat_type = plane_layout[row][col]
+        seat_price = seat_prices.get(seat_type, 0)
+        plane_layout[row][col] = 'X'
 
         flash(f'Success! You have booked seat {seat_type} at RM {seat_price}.', 'success')
-        return redirect(url_for('booking'))
+        return redirect(url_for('booking')) 
     else:
-        flash('No seat selected or flight number missing. Please select a seat.', 'danger')
-        return redirect(url_for('booking'))
-    
+        flash('No seat selected. Please select a seat.', 'danger')
+        return redirect(url_for('booking'))  
 @app.route('/logout')
 def logout():
     session.pop('username', None)

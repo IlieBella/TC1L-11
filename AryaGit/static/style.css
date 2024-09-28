@@ -54,19 +54,19 @@ main {
     background-color: #e60000;
 }
 
-.flight-table {
+.flights-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.flight-table th, .flight-table td {
+.flights-table th, .flights-table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
 }
 
-.flight-table th {
+.flights-table th {
     background-color: #333;
     color: white;
 }
