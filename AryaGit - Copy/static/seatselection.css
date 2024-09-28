@@ -1,11 +1,33 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
+    background-color: #f0f8ff;  
+    margin: 0;
+    padding: 0;
 }
+
+#plane-layout {
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
 
 table {
     margin: 20px auto;
     border-collapse: collapse;
+}
+
+button {
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
 }
 
 td {
@@ -17,27 +39,78 @@ td {
     vertical-align: middle;
 }
 
-.window {
+.window-seat {
     background-color: lightblue;
+    color: white;
+    font-weight: bold;
 }
 
-.aisle {
+.aisle-seat {
     background-color: lightgreen;
+    color: white;
+    font-weight: bold;
 }
 
-.booked {
+.selected-seat {
     background-color: gray;
-    pointer-events: none;
+    color: white;
+    font-weight: bold;
 }
-
-button {
-    padding: 10px 20px;
-    margin-top: 20px;
-}
-
 .price {
     font-size: 18px;
     margin-top: 10px;
+    color: #333;
 }
 
+button {
+    padding: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+}
 
+.navbar {
+    background-color: #333;
+    padding: 10px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar ul li a:hover {
+    text-decoration: underline;
+}
+
+h1, h3 {
+    color: #333;
+}
+
+.next-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.next-button:hover {
+    background-color: #45a049;
+}
+
+body {
+    background-color: #9d9bd3;
+}
