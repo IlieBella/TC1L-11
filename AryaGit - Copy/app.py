@@ -168,9 +168,24 @@ def confirm_booking():
         flash('No seat selected. Please select a seat.', 'danger')
         return redirect(url_for('booking'))
 
-@app.route('/next_page')
-def next_page():
-    return "This is the next page after booking."
+@app.route('/checkout', methods=['GET', 'POST'])
+def checkout():
+    selected_seat = session.get('selected_seat', None)
+    seat_price = 0
+
+    if selected_seat:
+        row, col = map(int, selected_seat.split(','))
+        seat_type = session.get('original_seat_type', {}).get(selected_seat, plane_layout[row][col])
+        if seat_type in seat_prices:
+            seat_price = seat_prices[seat_type]
+
+    if request.method == 'POST':
+        # Here, you would typically process the payment
+        flash('Your payment has been processed successfully!', 'success')
+        return redirect(url_for('home'))  # Redirect to home after successful payment
+
+    return render_template('checkout.html', selected_seat=selected_seat, seat_price=seat_price)
+
 
 @app.route('/logout')
 def logout():
