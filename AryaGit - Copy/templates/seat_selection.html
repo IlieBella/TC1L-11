@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,28 +8,31 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='seatselection.css') }}">
 </head>
 <body>
-    <nav class="navbar"></nav>
+    <nav class="navbar">
         <ul>
             <li><a href="{{ url_for('home') }}">Home</a></li>
             <li><a href="{{ url_for('booking') }}">Seat Selection</a></li>
         </ul>
     </nav>
+
     <h1>Private Jet Ticketing System</h1>
     <h3>Select a Seat:</h3>
+
     <form action="{{ url_for('confirm_booking') }}" method="POST">
         <table id="plane-layout">
-            {% for row in range(4) %}
+            {% for row_idx, row in enumerate(plane_layout) %}
             <tr>
-                {% for col in range(4) %}
+                {% for col_idx, seat_type in enumerate(row) %}
                 <td>
-                    {% set seat_type = plane_layout[row][col] %}
                     {% if seat_type == 'X' %}
-                    <div class="booked">X</div>
+                        <button type="submit" name="seat" value="{{ row_idx }},{{ col_idx }}" class="selected-seat">
+                            X (Unselect)
+                        </button>
                     {% else %}
-                    <button type="submit" name="seat" value="{{ row }},{{ col }}" 
-                        class="{% if seat_type == 'W' %}window{% else %}aisle{% endif %}">
-                        {{ seat_type }}
-                    </button>
+                        <button type="submit" name="seat" value="{{ row_idx }},{{ col_idx }}" 
+                            class="{% if seat_type == 'W' %}window-seat{% else %}aisle-seat{% endif %}">
+                            {{ seat_type }}
+                        </button>
                     {% endif %}
                 </td>
                 {% endfor %}
@@ -43,5 +47,7 @@
         <span id="seat-info">No seat selected</span>
         {% endif %}
     </div>
+
+    <a href="{{ url_for('next_page') }}" class="next-button">Next Page</a>
 </body>
 </html>
