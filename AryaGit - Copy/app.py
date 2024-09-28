@@ -2,8 +2,7 @@ from flask import Flask, request, redirect, url_for, session, render_template, f
 from flask_login import current_user
 import sqlite3
 from database import init_db
-from forms import UpdateProfileForm
-
+from forms import ChangeUsernameForm, ChangePasswordForm
 
 app = Flask(__name__)
 app.secret_key = 'yellow'
@@ -31,7 +30,7 @@ def get_db_connection():
 def signup():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form['password']
+        password = request.form['password'] 
         account_type = request.form['account_type']
 
         conn = get_db_connection()
@@ -71,9 +70,6 @@ def about():
 
 @app.route('/home')
 def home():
-    session.pop('selected_seat', None)
-    session.pop('original_seat_type', None)
-    
     flights = [
         {"flight_number": "PJ101", "departure": "Kuala Lumpur", "arrival": "Singapore", "date": "2024-10-01", "time": "10:00"},
         {"flight_number": "PJ102", "departure": "Kuala Lumpur", "arrival": "Bangkok", "date": "2024-10-02", "time": "12:00"},
@@ -105,33 +101,58 @@ def contact():
         email = request.form['email']
         message = request.form['message']
         
+        # Handle the message (e.g., send an email, save to database, etc.)
+
         flash('Your message has been sent!', 'success')
         return redirect(url_for('home'))
     
     return render_template('contact.html')
 
+
 @app.route('/user_profile', methods=['GET', 'POST'])
 def profile():
-    form = UpdateProfileForm()
-    if form.validate_on_submit():
-        conn = get_db_connection()
-        conn.execute('UPDATE users SET username = ?, email = ? WHERE username = ?',
-                     (form.username.data, form.email.data, session['username']))
-        conn.commit()
-        conn.close()
-        flash('Your account has been updated!', 'success')
-        return redirect(url_for('profile'))
+    change_username_form = ChangeUsernameForm()
+    change_password_form = ChangePasswordForm()
 
-    elif request.method == 'GET':
+    # Check if the username change form is submitted
+    if request.method == 'POST':
+        if 'update_profile' in request.form and change_username_form.validate_on_submit():
+            conn = get_db_connection()
+            conn.execute('UPDATE users SET username = ? WHERE username = ?',
+                         (change_username_form.username.data, session['username']))
+            conn.commit()
+            session['username'] = change_username_form.username.data  # Update session data with the new username
+            conn.close()
+            flash('Your username has been updated!', 'success')
+            return redirect(url_for('profile'))
+
+        # Check if the password change form is submitted
+        elif 'change_password' in request.form and change_password_form.validate_on_submit():
+            conn = get_db_connection()
+            user = conn.execute('SELECT * FROM users WHERE username = ?', 
+                                (session['username'],)).fetchone()
+
+            # Check if the current password is correct
+            if user and user['password'] == change_password_form.current_password.data:
+                conn.execute('UPDATE users SET password = ? WHERE username = ?',
+                             (change_password_form.new_password.data, session['username']))
+                conn.commit()
+                conn.close()
+                flash('Your password has been updated!', 'success')
+            else:
+                flash('Current password is incorrect.', 'danger')
+
+            return redirect(url_for('profile'))
+
+    # Prepopulate the form with the current username on GET request
+    if request.method == 'GET':
         conn = get_db_connection()
         user = conn.execute('SELECT * FROM users WHERE username = ?', 
                             (session['username'],)).fetchone()
         conn.close()
-        form.username.data = user['username']
-        form.email.data = user['email']
+        change_username_form.username.data = user['username']
 
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('user_profile.html', title='Profile', image_file=image_file, form=form)
+    return render_template('userprofile.html', change_username_form=change_username_form, change_password_form=change_password_form)
 
 @app.route('/booking')
 def booking():
@@ -168,24 +189,9 @@ def confirm_booking():
         flash('No seat selected. Please select a seat.', 'danger')
         return redirect(url_for('booking'))
 
-@app.route('/checkout', methods=['GET', 'POST'])
-def checkout():
-    selected_seat = session.get('selected_seat', None)
-    seat_price = 0
-
-    if selected_seat:
-        row, col = map(int, selected_seat.split(','))
-        seat_type = session.get('original_seat_type', {}).get(selected_seat, plane_layout[row][col])
-        if seat_type in seat_prices:
-            seat_price = seat_prices[seat_type]
-
-    if request.method == 'POST':
-        # Here, you would typically process the payment
-        flash('Your payment has been processed successfully!', 'success')
-        return redirect(url_for('home'))  # Redirect to home after successful payment
-
-    return render_template('checkout.html', selected_seat=selected_seat, seat_price=seat_price)
-
+@app.route('/next_page')
+def next_page():
+    return "This is the next page after booking."
 
 @app.route('/logout')
 def logout():

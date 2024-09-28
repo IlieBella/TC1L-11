@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Private Jet Ticketing - Homepage</title>
+    <title>Home | Luxurair</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <nav>
             <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('booking') }}">Plane Layout</a></li>
+            <li><a href="{{ url_for('profile') }}">Profile</a></li>
             <li><a href="{{ url_for('about') }}">About</a></li>
             <li><a href="{{ url_for('contact') }}">Contact</a></li>
-            <li><a href="{{ url_for('signup') }}">Signup</a></li>
-            <li><a href="{{ url_for('login') }}">Login</a></li>
-            <li><a href="{{ url_for('booking') }}">Plane Layout</a></li>
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
     </nav>
     
-    <h1>Welcome to Private Jet Ticketing</h1>
+    <h1>Welcome to Luxurair !</h1>
     <h3>Available Flights</h3>
     <table id="flights-table">
         <thead>
