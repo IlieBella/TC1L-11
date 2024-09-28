@@ -31,7 +31,7 @@ def get_db_connection():
 def signup():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form['password'] 
+        password = request.form['password']
         account_type = request.form['account_type']
 
         conn = get_db_connection()
@@ -71,6 +71,9 @@ def about():
 
 @app.route('/home')
 def home():
+    session.pop('selected_seat', None)
+    session.pop('original_seat_type', None)
+    
     flights = [
         {"flight_number": "PJ101", "departure": "Kuala Lumpur", "arrival": "Singapore", "date": "2024-10-01", "time": "10:00"},
         {"flight_number": "PJ102", "departure": "Kuala Lumpur", "arrival": "Bangkok", "date": "2024-10-02", "time": "12:00"},
@@ -102,29 +105,24 @@ def contact():
         email = request.form['email']
         message = request.form['message']
         
-        # Handle the message (e.g., send an email, save to database, etc.)
-
         flash('Your message has been sent!', 'success')
         return redirect(url_for('home'))
     
     return render_template('contact.html')
 
-
 @app.route('/user_profile', methods=['GET', 'POST'])
 def profile():
     form = UpdateProfileForm()
     if form.validate_on_submit():
-        # Assuming current_user is defined and represents the logged-in user
         conn = get_db_connection()
         conn.execute('UPDATE users SET username = ?, email = ? WHERE username = ?',
                      (form.username.data, form.email.data, session['username']))
         conn.commit()
         conn.close()
         flash('Your account has been updated!', 'success')
-        return redirect(url_for('profile'))  # Correct redirect to profile view
+        return redirect(url_for('profile'))
 
     elif request.method == 'GET':
-        # Retrieve current user's data from the database
         conn = get_db_connection()
         user = conn.execute('SELECT * FROM users WHERE username = ?', 
                             (session['username'],)).fetchone()
@@ -137,23 +135,43 @@ def profile():
 
 @app.route('/booking')
 def booking():
-    return render_template('seat_selection.html', plane_layout=plane_layout, selected_seat=None)
+    selected_seat = session.get('selected_seat', None)
+    seat_price = 0
+    if selected_seat:
+        row, col = map(int, selected_seat.split(','))
+        seat_type = session.get('original_seat_type', {}).get(f'{row},{col}', plane_layout[row][col])
+        if seat_type in seat_prices:
+            seat_price = seat_prices[seat_type]
+
+    return render_template('seat_selection.html', plane_layout=plane_layout, selected_seat=selected_seat, seat_price=seat_price, enumerate=enumerate)
 
 @app.route('/confirm_booking', methods=['POST'])
 def confirm_booking():
-
     seat_data = request.form.get('seat')
+    
     if seat_data:
         row, col = map(int, seat_data.split(','))
-        seat_type = plane_layout[row][col]
-        seat_price = seat_prices.get(seat_type, 0)
-        plane_layout[row][col] = 'X'
-
-        flash(f'Success! You have booked seat {seat_type} at RM {seat_price}.', 'success')
+        seat_type = session.get('original_seat_type', {}).get(seat_data, plane_layout[row][col])
+        
+        if plane_layout[row][col] == 'X':
+            plane_layout[row][col] = seat_type
+            flash(f'Seat at row {row+1}, column {col+1} has been unselected.', 'warning')
+            session.pop('selected_seat', None)
+        else:
+            session.setdefault('original_seat_type', {})[seat_data] = seat_type
+            plane_layout[row][col] = 'X'
+            seat_price = seat_prices.get(seat_type, 0)
+            session['selected_seat'] = seat_data
+            flash(f'Success! You have booked seat {seat_type} at RM {seat_price}.', 'success')
         return redirect(url_for('booking')) 
     else:
         flash('No seat selected. Please select a seat.', 'danger')
-        return redirect(url_for('booking'))  
+        return redirect(url_for('booking'))
+
+@app.route('/next_page')
+def next_page():
+    return "This is the next page after booking."
+
 @app.route('/logout')
 def logout():
     session.pop('username', None)
