@@ -1,43 +1,80 @@
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #24293b;
+    color: #66b9df;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #24293b;
+    color: #66b9df;
+    padding: 10px 20px;
     text-align: center;
 }
 
-table {
-    margin: 20px auto;
-    border-collapse: collapse;
+h1 {
+    margin: 0;
+    font-size: 24px;
 }
 
-td {
+.sidebar {
+    width: 200px;
+    background: #222;
+    color: #fff;
+    padding: 15px;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+.main-content {
+    margin-left: 220px; /* Space for the sidebar */
+    padding: 20px;
+}
+
+form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"] {
+    width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.window {
-    background-color: lightblue;
-}
-
-.aisle {
-    background-color: lightgreen;
-}
-
-.booked {
-    background-color: gray;
-    pointer-events: none;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 button {
-    padding: 10px 20px;
-    margin-top: 20px;
+    background: #5cb85c;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.price {
-    font-size: 18px;
-    margin-top: 10px;
+button:hover {
+    background: #4cae4c;
 }
 
-
+.footer {
+    text-align: center;
+    padding: 20px;
+    background: #333;
+    color: #fff;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

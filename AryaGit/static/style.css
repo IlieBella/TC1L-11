@@ -4,30 +4,39 @@ body, h1, h2, p {
 }
 
 body {
+
     font-family: Arial, sans-serif;
+    font-size: large;
     line-height: 1.6;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #94b2e5;
+    color: #3c5684;
+    text-align: center;
+    border: 2px #585858;
 }
 
 header {
-    background: #333;
-    color: #fff;
+    background: #94cbf0;
+    color: #4c88d8;
     padding: 10px 0;
-    text-align: center;
+    text-align: left;
 }
 
 header h1 {
     margin: 0;
 }
 
-nav {
-    margin: 10px 0;
+nav ul {
+    text-align: center;
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    display: flex; /* Use flexbox to arrange items in a row */
 }
 
 nav a {
-    color: #fff;
-    text-decoration: none;
+    text-align: left;
+    color: #395885;
+    text-decoration:double;
     margin: 0 15px;
     font-weight: bold;
 }
@@ -54,19 +63,19 @@ main {
     background-color: #e60000;
 }
 
-.flights-table {
+.flight-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.flights-table th, .flights-table td {
+.flight-table th, .flight-table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
 }
 
-.flights-table th {
+.flight-table th {
     background-color: #333;
     color: white;
 }

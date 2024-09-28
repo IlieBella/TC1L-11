@@ -4,40 +4,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UserProfile - Private Jet Ticketing Service</title>
+    <title>Profile | Luxurair</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='userprofile.css') }}">
+    <style>
+        /* Flash message container */
+        .flash-messages {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 350px;
+        }
+
+        /* General flash message styles */
+        .alert {
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background-color: #f4f4f4;
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: translateX(100%);  /* Start hidden (off-screen) */
+            opacity: 0;  /* Invisible at the start */
+        }
+
+        /* Show the alert with animation */
+        .alert.show {
+            transform: translateX(0);  /* Move into view */
+            opacity: 1;  /* Fully visible */
+        }
+
+        /* Success message styles */
+        .alert.success {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Warning message styles */
+        .alert.warning {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        /* Danger message styles */
+        .alert.danger {
+            background-color: #f44336;
+            color: white;
+        }
+
+        /* Close button styles */
+        .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            outline: none;
+        }
+
+        /* Hover effect for the close button */
+        .closebtn:hover {
+            color: #ccc;
+        }
+
+        /* Optional auto-dismiss animation */
+        .alert.fade-out {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
         <ul>
             <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('booking') }}">Seat Selection</a></li>
+            <li><a href="{{ url_for('booking') }}">Browse Flights</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
         </ul>
     </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">
+                        {{ message }}
+                        <button class="closebtn" onclick="this.parentElement.style.display='none';">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}    
     <header>
         <h1>User Profile</h1>
     </header>
+
     <main>
-        <form action="" method="post">
+        <h2>Change username</h2>
+        <form action="{{ url_for('profile')}}" method="post">
+            {{change_username_form.hidden_tag()}}
             <p>
-                {{form.username.label}} <br>
-                {{form.username(size=30)}}
+                {{change_username_form.username.label}} <br>
+                {{change_username_form.username(size=30)}}
+            </p>
+            <p><input type="submit" name="update_profile" value="Update username"></p>
+        </form>
+
+        <h2>Change password</h2>
+        <form action="{{ url_for('profile')}}" method="post">
+            {{change_password_form.hidden_tag()}}
+            <p>
+                {{change_password_form.current_password.label}} <br>
+                {{change_password_form.current_password(size=30)}}
             </p>
             <p>
-                {{form.name.label}} <br>
-                {{form.name(size=30)}}
+                {{change_password_form.new_password.label}} <br>
+                {{change_password_form.new_password(size=30)}}
             </p>
             <p>
-                {{form.email.label}} <br>
-                {{form.email(size=30)}}
+                {{change_password_form.confirm_password.label}} <br>
+                {{change_password_form.confirm_password(size=30)}}
             </p>
-            <p>
-                {{form.phonenumber.label}} <br>
-                {{form.phonenumber(size=30)}}
-            </p>
-            <p>{{form.submit()}}</p>  
+            <p><input type="submit" name="change_password" value="Update password"></p>  
         </form>
     </main>
-</body>
+    <script>
+        // Function to show flash messages with smooth animation
+        document.addEventListener("DOMContentLoaded", function() {
+            let alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                // Add 'show' class to make it visible with animation
+                setTimeout(function() {
+                    alert.classList.add('show');
+                }, 100);
 
+                // Automatically dismiss flash messages after 5 seconds
+                setTimeout(function() {
+                    alert.classList.add('fade-out');
+                    setTimeout(function() { alert.style.display = 'none'; }, 500);
+                }, 5000);
+            });
+        });
+    </script>
+</body>
 </html>

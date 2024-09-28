@@ -1,29 +1,30 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Signup - Private Jet Ticketing Service</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Signup | Luxurair</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='users.css') }}">
 </head>
 <body>
-    <header>
         <h1>Signup</h1>
-    </header>
-    <main>
-        <form method="post">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <label for="account_type">Account Type:</label>
-            <select id="account_type" name="account_type">
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-            </select>
-            <button type="submit">Signup</button>
-        </form>
-        <p><a href="{{ url_for('login') }}">Already have an account? Login</a></p>
-    </main>
-</body>
+        <h5>LUXURAIR is excited to serve you!</h5>
+    <div class="container">
+        <main>
+            <form method="post" style="max-width: 400px; margin: auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                
+                <label for="account_type">Account Type:</label>
+                <select id="account_type" name="account_type" required>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <button type="submit">Signup</button>
+            </form>
+            </div>
+            <p><a href="{{ url_for('login') }}">Already have an account? Login</a></p>
+        </main>
+    </body>
 </html>

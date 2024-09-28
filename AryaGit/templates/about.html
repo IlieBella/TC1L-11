@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About | Luxurair</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="sidebar">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('booking') }}">Browse Flights</a></li>
+            <li><a href="{{ url_for('profile') }}">Profile</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+    </nav>
+    <header>
+        <h1>About Us</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Our Mission</h2>
+            <img src="{{ url_for('static', filename='uploads/miniITlogo.png') }}" alt="Company Logo" style="max-width: 50%; height: auto;" />
+            <p>At LUXURAIR Private Jet Ticketing Service, we strive to provide luxury travel options that are both accessible and affordable.</p>
+        </section>
+        <section>
+            <h2>Our Team</h2>
+            <p>We are a team of aviation enthusiasts dedicated to making private jet travel convenient for everyone.</p>
+        </section>
+        <section>
+            <h2>Contact Us</h2>
+            <p>If you have any questions, feel free to <a href="{{ url_for('contact') }}">contact us</a>.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; Luxurair Private Jet Ticketing Service. All rights reserved.</p>
+    </footer>
+</body>
+</html>

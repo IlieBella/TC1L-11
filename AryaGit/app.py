@@ -2,8 +2,7 @@ from flask import Flask, request, redirect, url_for, session, render_template, f
 from flask_login import current_user
 import sqlite3
 from database import init_db
-from forms import UpdateProfileForm
-
+from forms import ChangeUsernameForm, ChangePasswordForm
 
 app = Flask(__name__)
 app.secret_key = 'yellow'
@@ -65,6 +64,9 @@ def login():
 
     return render_template('login.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 @app.route('/home')
 def home():
@@ -92,51 +94,105 @@ def home():
     ]
     return render_template('home.html', flights=flights)
 
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        message = request.form['message']
+        
+        # Handle the message (e.g., send an email, save to database, etc.)
+
+        flash('Your message has been sent!', 'success')
+        return redirect(url_for('home'))
+    
+    return render_template('contact.html')
+
+
 @app.route('/user_profile', methods=['GET', 'POST'])
 def profile():
-    form = UpdateProfileForm()
-    if form.validate_on_submit():
-        # Assuming current_user is defined and represents the logged-in user
-        conn = get_db_connection()
-        conn.execute('UPDATE users SET username = ?, email = ? WHERE username = ?',
-                     (form.username.data, form.name.data, form.email.data, form.phonenumber.data, session['username']))
-        conn.commit()
-        conn.close()
-        flash('Your account has been updated!', 'success')
-        return redirect(url_for('profile'))  # Correct redirect to profile view
+    change_username_form = ChangeUsernameForm()
+    change_password_form = ChangePasswordForm()
 
-    elif request.method == 'GET':
-        # Retrieve current user's data from the database
+    # Check if the username change form is submitted
+    if request.method == 'POST':
+        if 'update_profile' in request.form and change_username_form.validate_on_submit():
+            conn = get_db_connection()
+            conn.execute('UPDATE users SET username = ? WHERE username = ?',
+                         (change_username_form.username.data, session['username']))
+            conn.commit()
+            session['username'] = change_username_form.username.data  # Update session data with the new username
+            conn.close()
+            flash('Your username has been updated!', 'success')
+            return redirect(url_for('profile'))
+
+        # Check if the password change form is submitted
+        elif 'change_password' in request.form and change_password_form.validate_on_submit():
+            conn = get_db_connection()
+            user = conn.execute('SELECT * FROM users WHERE username = ?', 
+                                (session['username'],)).fetchone()
+
+            # Check if the current password is correct
+            if user and user['password'] == change_password_form.current_password.data:
+                conn.execute('UPDATE users SET password = ? WHERE username = ?',
+                             (change_password_form.new_password.data, session['username']))
+                conn.commit()
+                conn.close()
+                flash('Your password has been updated!', 'success')
+            else:
+                flash('Current password is incorrect.', 'danger')
+
+            return redirect(url_for('profile'))
+
+    # Prepopulate the form with the current username on GET request
+    if request.method == 'GET':
         conn = get_db_connection()
         user = conn.execute('SELECT * FROM users WHERE username = ?', 
                             (session['username'],)).fetchone()
         conn.close()
-        form.username.data = user['username']
-        form.name.data = user['name']
-        form.email.data = user['email']
-        form.phonenumber.data = user['phonenumber']
+        change_username_form.username.data = user['username']
 
-    return render_template('userprofile.html', form=form)
+    return render_template('userprofile.html', change_username_form=change_username_form, change_password_form=change_password_form)
 
 @app.route('/booking')
 def booking():
-    return render_template('seat_selection.html', plane_layout=plane_layout, selected_seat=None)
+    selected_seat = session.get('selected_seat', None)
+    seat_price = 0
+    if selected_seat:
+        row, col = map(int, selected_seat.split(','))
+        seat_type = session.get('original_seat_type', {}).get(f'{row},{col}', plane_layout[row][col])
+        if seat_type in seat_prices:
+            seat_price = seat_prices[seat_type]
+
+    return render_template('seat_selection.html', plane_layout=plane_layout, selected_seat=selected_seat, seat_price=seat_price, enumerate=enumerate)
 
 @app.route('/confirm_booking', methods=['POST'])
 def confirm_booking():
-
     seat_data = request.form.get('seat')
+    
     if seat_data:
         row, col = map(int, seat_data.split(','))
-        seat_type = plane_layout[row][col]
-        seat_price = seat_prices.get(seat_type, 0)
-        plane_layout[row][col] = 'X'
-
-        flash(f'Success! You have booked seat {seat_type} at RM {seat_price}.', 'success')
+        seat_type = session.get('original_seat_type', {}).get(seat_data, plane_layout[row][col])
+        
+        if plane_layout[row][col] == 'X':
+            plane_layout[row][col] = seat_type
+            flash(f'Seat at row {row+1}, column {col+1} has been unselected.', 'warning')
+            session.pop('selected_seat', None)
+        else:
+            session.setdefault('original_seat_type', {})[seat_data] = seat_type
+            plane_layout[row][col] = 'X'
+            seat_price = seat_prices.get(seat_type, 0)
+            session['selected_seat'] = seat_data
+            flash(f'Success! You have booked seat {seat_type} at RM {seat_price}.', 'success')
         return redirect(url_for('booking')) 
     else:
         flash('No seat selected. Please select a seat.', 'danger')
-        return redirect(url_for('booking'))  
+        return redirect(url_for('booking'))
+
+@app.route('/next_page')
+def next_page():
+    return "This is the next page after booking."
+
 @app.route('/logout')
 def logout():
     session.pop('username', None)

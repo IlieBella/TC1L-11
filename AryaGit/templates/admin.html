@@ -1,0 +1,47 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"> <!-- Corrected charset -->
+    <title>Admin | Add Flights</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Add Flight</h1>
+    </header>
+    
+    <div class="sidebar">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('admin') }}">Admin</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <form method="post"> <!-- Corrected method attribute -->
+            <label for="flight_number">Flight Number:</label> <!-- Removed 'n' -->
+            <input type="text" id="flight_number" name="flight_number" required>
+            
+            <label for="departure">Departure:</label> <!-- Removed 'n' -->
+            <input type="text" id="departure" name="departure" required>
+            
+            <label for="arrival">Arrival:</label> <!-- Removed 'n' -->
+            <input type="text" id="arrival" name="arrival" required>
+            
+            <label for="date">Date:</label> <!-- Changed to type="date" -->
+            <input type="date" id="date" name="date" required>
+            
+            <label for="time">Time:</label> <!-- Changed to type="time" -->
+            <input type="time" id="time" name="time" required>
+            
+            <button type="submit">Add Flight</button>
+        </form>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2024 Luxurair. All rights reserved.</p>
+    </footer>
+</body>
+</html>
