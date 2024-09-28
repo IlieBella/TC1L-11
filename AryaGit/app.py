@@ -291,6 +291,7 @@ def profile():
 
 @app.route('/booking')
 def booking():
+    
     return render_template('seat_selection.html', flights_data=flights_data, selected_seat=None)
 
 @app.route('/confirm_booking', methods=['POST'])
