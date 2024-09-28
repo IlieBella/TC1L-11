@@ -10,188 +10,16 @@ app.secret_key = 'yellow'
 
 init_db()
 
-flights_data = {
-    'PJ101': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W']
-        ],
-        'seat_prices': {'W': 500, 'A': 400}
-    },
-    'PJ102': {
-        'plane_layout': [
-            ['W', 'A', 'W', 'W'],
-            ['W', 'A', 'W', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W']
-        ],
-        'seat_prices': {'W': 600, 'A': 450}
-    },
-    'PJ103': {
-        'plane_layout': [
-            ['W', 'W', 'A', 'A'],
-            ['W', 'W', 'A', 'A'],
-            ['A', 'A', 'W', 'W'],
-            ['A', 'A', 'W', 'W']
-        ],
-        'seat_prices': {'W': 700, 'A': 500}
-    },
-    'PJ104': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'W', 'A'],
-            ['A', 'W', 'W', 'A']
-        ],
-        'seat_prices': {'W': 550, 'A': 450}
-    },
-    'PJ105': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W']
-        ],
-        'seat_prices': {'W': 650, 'A': 500}
-    },
-    'PJ106': {
-        'plane_layout': [
-            ['W', 'A', 'W', 'A'],
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'A', 'W']
-        ],
-        'seat_prices': {'W': 800, 'A': 600}
-    },
-    'PJ107': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['A', 'W', 'W', 'A'],
-            ['A', 'A', 'W', 'W']
-        ],
-        'seat_prices': {'W': 1000, 'A': 700}
-    },
-    'PJ108': {
-        'plane_layout': [
-            ['W', 'W', 'A', 'A'],
-            ['A', 'A', 'W', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['W', 'W', 'A', 'A']
-        ],
-        'seat_prices': {'W': 750, 'A': 550}
-    },
-    'PJ109': {
-        'plane_layout': [
-            ['W', 'A', 'W', 'A'],
-            ['W', 'A', 'W', 'A'],
-            ['A', 'W', 'A', 'W'],
-            ['A', 'A', 'W', 'W']
-        ],
-        'seat_prices': {'W': 900, 'A': 600}
-    },
-    'PJ110': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'A', 'W'],
-            ['A', 'A', 'W', 'W']
-        ],
-        'seat_prices': {'W': 950, 'A': 700}
-     },
+plane_layout = [
+    ['W', 'A', 'A', 'W'],
+    ['W', 'A', 'A', 'W'],
+    ['W', 'A', 'A', 'W'],
+    ['W', 'A', 'A', 'W']
+]
 
-    'PJ111': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W']
-        ],
-        'seat_prices': {'W': 550, 'A': 400}
-    },
-    'PJ112': {
-        'plane_layout': [
-            ['W', 'A', 'W', 'A'],
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'A', 'W']
-        ],
-        'seat_prices': {'W': 600, 'A': 450}
-    },
-    'PJ113': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['A', 'W', 'A', 'A'],
-            ['W', 'A', 'W', 'A']
-        ],
-        'seat_prices': {'W': 750, 'A': 500}
-    },
-    'PJ114': {
-        'plane_layout': [
-            ['W', 'W', 'A', 'A'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'A', 'A'],
-            ['A', 'W', 'W', 'A']
-        ],
-        'seat_prices': {'W': 600, 'A': 450}
-    },
-    'PJ115': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'W', 'A']
-        ],
-        'seat_prices': {'W': 500, 'A': 400}
-    },
-    'PJ116': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['A', 'W', 'A', 'A'],
-            ['W', 'A', 'W', 'A']
-        ],
-        'seat_prices': {'W': 550, 'A': 450}
-    },
-    'PJ117': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['A', 'W', 'A', 'W'],
-            ['W', 'A', 'A', 'W']
-        ],
-        'seat_prices': {'W': 650, 'A': 500}
-    },
-    'PJ118': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['W', 'A', 'W', 'A'],
-            ['A', 'W', 'A', 'A'],
-            ['A', 'W', 'W', 'A']
-        ],
-        'seat_prices': {'W': 700, 'A': 550}
-    },
-    'PJ119': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'W', 'A'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'W', 'A']
-        ],
-        'seat_prices': {'W': 750, 'A': 600}
-    },
-    'PJ120': {
-        'plane_layout': [
-            ['W', 'A', 'A', 'W'],
-            ['A', 'A', 'W', 'W'],
-            ['W', 'A', 'A', 'W'],
-            ['A', 'W', 'A', 'A']
-        ],
-        'seat_prices': {'W': 800, 'A': 650}
-    }
+seat_prices = {
+    'W': 500,
+    'A': 400
 }
 
 def get_db_connection():
@@ -237,6 +65,9 @@ def login():
 
     return render_template('login.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 @app.route('/home')
 def home():
@@ -263,6 +94,21 @@ def home():
         {"flight_number": "PJ120", "departure": "Kuala Lumpur", "arrival": "Singapore", "date": "2024-10-20", "time": "18:30"},
     ]
     return render_template('home.html', flights=flights)
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        message = request.form['message']
+        
+        # Handle the message (e.g., send an email, save to database, etc.)
+
+        flash('Your message has been sent!', 'success')
+        return redirect(url_for('home'))
+    
+    return render_template('contact.html')
+
 
 @app.route('/user_profile', methods=['GET', 'POST'])
 def profile():
@@ -291,28 +137,23 @@ def profile():
 
 @app.route('/booking')
 def booking():
-    
-    return render_template('seat_selection.html', flights_data=flights_data, selected_seat=None)
+    return render_template('seat_selection.html', plane_layout=plane_layout, selected_seat=None)
 
 @app.route('/confirm_booking', methods=['POST'])
 def confirm_booking():
-    flight_number = request.form.get('flight_number')  # Make sure this field is included in your seat selection form
+
     seat_data = request.form.get('seat')
-
-    if flight_number and seat_data:
+    if seat_data:
         row, col = map(int, seat_data.split(','))
-        seat_type = flights_data[flight_number]['plane_layout'][row][col]
-        seat_price = flights_data[flight_number]['seat_prices'].get(seat_type, 0)
-
-        # Mark the seat as booked (using 'X' for example)
-        flights_data[flight_number]['plane_layout'][row][col] = 'X'
+        seat_type = plane_layout[row][col]
+        seat_price = seat_prices.get(seat_type, 0)
+        plane_layout[row][col] = 'X'
 
         flash(f'Success! You have booked seat {seat_type} at RM {seat_price}.', 'success')
-        return redirect(url_for('booking'))
+        return redirect(url_for('booking')) 
     else:
-        flash('No seat selected or flight number missing. Please select a seat.', 'danger')
-        return redirect(url_for('booking'))
-    
+        flash('No seat selected. Please select a seat.', 'danger')
+        return redirect(url_for('booking'))  
 @app.route('/logout')
 def logout():
     session.pop('username', None)

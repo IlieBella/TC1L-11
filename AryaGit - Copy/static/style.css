@@ -1,0 +1,81 @@
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+
+    font-family: Arial, sans-serif;
+    font-size: large;
+    line-height: 1.6;
+    background-color: #94b2e5;
+    color: #3c5684;
+    text-align: center;
+    border: 2px #585858;
+}
+
+header {
+    background: #94cbf0;
+    color: #4c88d8;
+    padding: 10px 0;
+    text-align: left;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    text-align: center;
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    display: flex; /* Use flexbox to arrange items in a row */
+}
+
+nav a {
+    text-align: left;
+    color: #395885;
+    text-decoration:double;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+}
+
+.logout-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    float: right;
+}
+
+.logout-btn:hover {
+    background-color: #e60000;
+}
+
+.flight-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.flight-table th, .flight-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.flight-table th {
+    background-color: #333;
+    color: white;
+}
