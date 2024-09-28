@@ -6,7 +6,8 @@ from forms import UpdateProfileForm
 
 
 app = Flask(__name__)
-app.secret_key = 'yellow'
+app.secret_
+key = 'yellow'
 
 init_db()
 
