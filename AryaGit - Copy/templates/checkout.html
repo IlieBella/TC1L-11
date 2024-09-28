@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Private Jet Ticketing</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Checkout</h1>
+        <nav>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            <li><a href="{{ url_for('signup') }}">Signup</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('booking') }}">Plane Layout</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </nav>
+    </header>
+    <main>
+        <h2>Confirm Your Booking</h2>
+        <p>Selected Seat: {{ selected_seat }}</p>
+        <p>Price: RM {{ seat_price }}</p>
+
+        <form method="POST">
+            <button type="submit">Confirm Payment</button>
+        </form>
+        <br>
+        <a href="{{ url_for('booking') }}">Change Seat Selection</a>
+    </main>
+    <footer>
+        <p>&copy; Luxurair Private Jet Ticketing Service. All rights reserved.</p>
+    </footer>
+</body>
+</html>
