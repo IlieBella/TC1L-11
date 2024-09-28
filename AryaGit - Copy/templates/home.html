@@ -7,12 +7,16 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <nav class="navbar"></nav>
-    <ul>
-        <li><a href="{{ url_for('home') }}">Home</a></li>
-        <li><a href="{{ url_for('booking') }}">Seat Selection</a></li>
-    </ul>
+    <nav>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            <li><a href="{{ url_for('signup') }}">Signup</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('booking') }}">Plane Layout</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
     </nav>
+    
     <h1>Welcome to Private Jet Ticketing</h1>
     <h3>Available Flights</h3>
     <table id="flights-table">
